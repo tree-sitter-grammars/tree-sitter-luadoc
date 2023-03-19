@@ -26,8 +26,15 @@ module.exports = grammar({
       $.alias_annotation,
       $.return_annotation,
       $.field_annotation,
+      $.qualifier_annotation,
       $.generic_annotation,
       $.vararg_annotation,
+      $.diagnostic_annotation,
+      $.deprecated_annotation,
+      $.cast_annotation,
+      $.async_annotation,
+      $.overload_annotation,
+      $.enum_annotation,
       $.language_injection,
       $.see_reference,
     ),
@@ -35,19 +42,20 @@ module.exports = grammar({
     class_annotation: $ => seq(
       '@class',
       $.identifier,
-      optional(seq(':', $.identifier)),
+      optional(seq(':', $.type)),
       optional(choice($.class_at_comment, $.comment)),
     ),
 
     type_annotation: $ => seq(
       '@type',
-      $.type,
+      commaSep1(prec.right($.type)),
       optional(choice($.at_comment, $.comment)),
     ),
 
     param_annotation: $ => seq(
       '@param',
-      $.identifier,
+      choice($.identifier, '...'),
+      optional('?'),
       $.type,
       optional(choice($.at_comment, $.comment)),
     ),
@@ -68,10 +76,13 @@ module.exports = grammar({
     field_annotation: $ => seq(
       '@field',
       optional($.qualifier),
-      $.identifier,
+      choice($.identifier, $.positional_field),
+      optional('?'),
       $.type,
       optional(choice($.at_comment, $.comment)),
     ),
+
+    qualifier_annotation: _ => choice('@public', '@protected', '@private'),
 
     generic_annotation: $ => seq(
       '@generic',
@@ -82,6 +93,22 @@ module.exports = grammar({
     ),
 
     vararg_annotation: $ => seq('@vararg', $.type, optional($.comment)),
+
+    diagnostic_annotation: $ => seq(
+      '@diagnostic',
+      $.diagnostic_identifier,
+      optional(seq(':', $.diagnostic_identifier)),
+    ),
+
+    deprecated_annotation: $ => seq('@deprecated', optional(seq(optional(':'), $.comment))),
+
+    cast_annotation: $ => seq('@cast', $.type, $.type, optional($.comment)),
+
+    async_annotation: $ => seq('@async', optional($.comment)),
+
+    overload_annotation: $ => seq('@overload', $.function_type, optional($.comment)),
+
+    enum_annotation: $ => seq('@enum', $.identifier, optional($.comment)),
 
     language_injection: $ => seq('@language', $.identifier, optional($.comment)),
 
@@ -100,39 +127,77 @@ module.exports = grammar({
 
     comment: _ => token(prec(-1, /[^\r\n]+/)),
 
-    type: $ => choice(
+    type: $ => prec.right(choice(
       $.builtin_type,
       $.identifier,
       $.array_type,
       $.table_type,
+      $.table_literal_type,
       $.union_type,
+      $.parenthesized_type,
       $.function_type,
       $.member_type,
+      $.optional_type,
       $.literal_type,
+    )),
+
+    array_type: $ => choice(
+      seq($.type, '[', token.immediate(']')),
     ),
 
-    array_type: $ => seq($.type, '[', token.immediate(']')),
+    table_type: $ => seq(
+      'table',
+      '<',
+      field('key', $.type),
+      optional(seq(',', field('value', $.type))),
+      '>',
+    ),
 
-    table_type: $ => seq('table', '<', field('key', $.type), ',', field('value', $.type), '>'),
+    table_literal_type: $ => seq(
+      '{',
+      commaSep(seq(
+        field(
+          'field',
+          choice(
+            seq($.identifier),
+            seq('[', choice($.type, $.number), ']'),
+          ),
+        ),
+        optional('?'),
+        ':',
+        $.type,
+      )),
+      '}',
+    ),
 
     union_type: $ => prec.right(seq($.type, '|', $.type)),
 
+    parenthesized_type: $ => seq('(', $.type, ')'),
+
     function_type: $ => prec.right(seq(
-      'fun',
+      choice('fun', 'function'),
       '(',
-      optional(seq($.parameter, repeat(seq(',', $.parameter)))),
+      choice(commaSep($.parameter), '...', commaSep($.type), seq('self', optional('?'))),
       ')',
-      ':',
-      $.type,
+      optional(seq(':', commaSep1(prec.right($.type)))),
     )),
 
-    parameter: $ => seq($.identifier, ':', $.type),
+    parameter: $ => seq(
+      choice(
+        seq(choice($.identifier, 'self'), optional('?')),
+        '...',
+      ),
+      ':',
+      $.type,
+    ),
 
-    member_type: $ => seq($.type, '#', $.identifier),
+    member_type: $ => seq($.type, choice('#', '.'), $.identifier),
+
+    optional_type: $ => seq($.type, '?'),
 
     literal_type: _ => seq('"', /[^"]*/, '"'),
 
-    builtin_type: _ => choice(
+    builtin_type: _ => prec.right(choice(
       'any',
       'boolean',
       'function',
@@ -140,10 +205,41 @@ module.exports = grammar({
       'nil',
       'number',
       'string',
+      'table',
       'userdata',
       'void',
-    ),
+    )),
+
+    number: _ => /\d+/,
+
+    positional_field: $ => seq('[', $.number, ']'),
 
     identifier: _ => /[a-zA-Z_][a-zA-Z0-9_]*/,
+
+    diagnostic_identifier: _ => /[a-zA-Z_][a-zA-Z0-9_-]*/,
   },
 });
+
+/**
+ * Creates a rule to optionally match one or more of the rules separated by a comma
+ *
+ * @param {Rule} rule
+ *
+ * @return {ChoiceRule}
+ *
+ */
+function commaSep(rule) {
+  return optional(commaSep1(rule));
+}
+
+/**
+ * Creates a rule to match one or more of the rules separated by a comma
+ *
+ * @param {Rule} rule
+ *
+ * @return {SeqRule}
+ *
+ */
+function commaSep1(rule) {
+  return seq(rule, repeat(seq(',', rule)));
+}
