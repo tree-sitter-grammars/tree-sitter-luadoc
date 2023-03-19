@@ -1,0 +1,231 @@
+========================
+Test a Class Annotation
+========================
+
+@class Transport @parent class
+
+---
+
+(documentation
+  (class_annotation
+    (identifier)
+    (class_at_comment
+      (identifier)
+      (comment))))
+
+========================================
+Test a Class That Extends Another Class
+========================================
+
+@class Ship : Transport @Ship extends Transport
+
+---
+
+(documentation
+  (class_annotation
+    (identifier)
+    (identifier)
+    (class_at_comment
+      (identifier)
+      (identifier))))
+
+========================
+Test a Field Annotation
+========================
+
+@field name string
+
+---
+
+(documentation
+  (field_annotation
+    (identifier)
+    (builtin_type)))
+
+============================
+Test a Parameter Annotation
+============================
+
+@param type number @parameter type
+
+---
+
+(documentation
+  (param_annotation
+    (identifier)
+    (builtin_type)
+    (at_comment
+      (identifier)
+      (comment))))
+
+=========================
+Test a Return Annotation
+=========================
+
+@return Car|Ship @may return Car or Ship
+
+---
+
+(documentation
+  (return_annotation
+    (union_type
+      (identifier)
+      (identifier))
+    (at_comment
+      (identifier)
+      (comment))))
+
+=======================
+Test a Type Annotation
+=======================
+
+@type Car
+
+---
+
+(documentation
+  (type_annotation
+    (identifier)))
+
+==================================
+Test Another Parameter Annotation
+==================================
+
+@param v Transport
+
+---
+
+(documentation
+  (param_annotation
+    (identifier)
+    (identifier)))
+
+=========================
+Test an Alias Annotation
+=========================
+
+@alias Handler fun(type: string, data: any):void
+
+---
+
+(documentation
+  (alias_annotation
+    (identifier)
+    (function_type
+      (parameter
+        (identifier)
+        (builtin_type))
+      (parameter
+        (identifier)
+        (builtin_type))
+      (builtin_type))))
+
+==============================
+Test a Field with a Qualifier
+==============================
+
+@field protected name string
+
+---
+
+(documentation
+  (field_annotation
+    (qualifier)
+    (identifier)
+    (builtin_type)))
+
+==========================
+Test a Generic Annotation
+==========================
+
+@generic T : Transport
+
+---
+
+(documentation
+  (generic_annotation
+    (identifier)
+    (identifier)))
+
+=================================
+Test a Double Generic Annotation
+=================================
+
+@generic T : Transport, K : Car
+
+---
+
+(documentation
+  (generic_annotation
+    (identifier)
+    (identifier)
+    (identifier)
+    (identifier)))
+
+=========================
+Test a Vararg Annotation
+=========================
+
+@vararg string
+
+---
+
+(documentation
+  (vararg_annotation
+    (builtin_type)))
+
+==========================
+Test a Language Injection
+==========================
+
+@language Hare
+
+---
+
+(documentation
+  (language_injection
+    (identifier)))
+
+=====================
+Test a See Reference
+=====================
+
+@see Car
+
+---
+
+(documentation
+  (see_reference
+    (identifier)))
+
+========================
+Test a Complicated Type
+========================
+
+@type Car|Ship|fun(type: string, data: any):void|table<string, string[]>|"one"|"two"
+
+---
+
+(documentation
+  (type_annotation
+    (union_type
+      (identifier)
+      (union_type
+        (identifier)
+        (function_type
+          (parameter
+            (identifier)
+            (builtin_type))
+          (parameter
+            (identifier)
+            (builtin_type))
+          (union_type
+            (builtin_type)
+            (union_type
+              (table_type
+                (builtin_type)
+                (array_type
+                  (builtin_type)))
+              (union_type
+                (literal_type)
+                (literal_type)))))))))

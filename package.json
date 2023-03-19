@@ -1,0 +1,43 @@
+{
+  "name": "tree-sitter-luadoc",
+  "version": "0.0.1",
+  "description": "Luadoc grammar for tree-sitter",
+  "main": "bindings/node",
+  "keywords": [
+    "parser",
+    "lexer",
+    "luadoc"
+  ],
+  "author": "Amaan Qureshi <amaanq12@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/amaanq/tree-sitter-luadoc/issues"
+  },
+  "homepage": "https://github.com/amaanq/tree-sitter-luadoc#readme",
+  "dependencies": {
+    "nan": "^2.17.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.36.0",
+    "eslint-config-google": "^0.14.0",
+    "tree-sitter-cli": "^0.20.7"
+  },
+  "repository": "https://github.com/amaanq/tree-sitter-luadoc",
+  "scripts": {
+    "build": "tree-sitter generate && node-gyp build",
+    "lint": "eslint grammar.js",
+    "parse": "tree-sitter parse",
+    "test": "tree-sitter test"
+  },
+  "tree-sitter": [
+    {
+      "injection-regex": "luadoc",
+      "file-types": [
+        "luadoc"
+      ],
+      "highlights": [
+        "queries/highlights.scm"
+      ]
+    }
+  ]
+}
