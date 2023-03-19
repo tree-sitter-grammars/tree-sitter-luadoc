@@ -28,6 +28,18 @@
         "named": true
       },
       {
+        "type": "optional_type",
+        "named": true
+      },
+      {
+        "type": "parenthesized_type",
+        "named": true
+      },
+      {
+        "type": "table_literal_type",
+        "named": true
+      },
+      {
         "type": "table_type",
         "named": true
       },
@@ -76,6 +88,21 @@
     }
   },
   {
+    "type": "async_annotation",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "comment",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "at_comment",
     "named": true,
     "fields": {},
@@ -100,6 +127,25 @@
     "fields": {}
   },
   {
+    "type": "cast_annotation",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "type",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "class_annotation",
     "named": true,
     "fields": {},
@@ -116,7 +162,7 @@
           "named": true
         },
         {
-          "type": "identifier",
+          "type": "type",
           "named": true
         }
       ]
@@ -142,6 +188,36 @@
     }
   },
   {
+    "type": "deprecated_annotation",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "comment",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "diagnostic_annotation",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "diagnostic_identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "documentation",
     "named": true,
     "fields": {},
@@ -154,7 +230,27 @@
           "named": true
         },
         {
+          "type": "async_annotation",
+          "named": true
+        },
+        {
+          "type": "cast_annotation",
+          "named": true
+        },
+        {
           "type": "class_annotation",
+          "named": true
+        },
+        {
+          "type": "deprecated_annotation",
+          "named": true
+        },
+        {
+          "type": "diagnostic_annotation",
+          "named": true
+        },
+        {
+          "type": "enum_annotation",
           "named": true
         },
         {
@@ -170,7 +266,15 @@
           "named": true
         },
         {
+          "type": "overload_annotation",
+          "named": true
+        },
+        {
           "type": "param_annotation",
+          "named": true
+        },
+        {
+          "type": "qualifier_annotation",
           "named": true
         },
         {
@@ -193,6 +297,25 @@
     }
   },
   {
+    "type": "enum_annotation",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "field_annotation",
     "named": true,
     "fields": {},
@@ -206,6 +329,10 @@
         },
         {
           "type": "comment",
+          "named": true
+        },
+        {
+          "type": "positional_field",
           "named": true
         },
         {
@@ -225,7 +352,7 @@
     "fields": {},
     "children": {
       "multiple": true,
-      "required": true,
+      "required": false,
       "types": [
         {
           "type": "parameter",
@@ -297,6 +424,40 @@
     }
   },
   {
+    "type": "optional_type",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "type",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "overload_annotation",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "function_type",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "param_annotation",
     "named": true,
     "fields": {},
@@ -335,7 +496,42 @@
     }
   },
   {
+    "type": "parenthesized_type",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "type",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "positional_field",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "number",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "qualifier",
+    "named": true,
+    "fields": {}
+  },
+  {
+    "type": "qualifier_annotation",
     "named": true,
     "fields": {}
   },
@@ -382,6 +578,44 @@
     }
   },
   {
+    "type": "table_literal_type",
+    "named": true,
+    "fields": {
+      "field": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "[",
+            "named": false
+          },
+          {
+            "type": "]",
+            "named": false
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "type",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "type",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "table_type",
     "named": true,
     "fields": {
@@ -397,7 +631,7 @@
       },
       "value": {
         "multiple": false,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "type",
@@ -485,6 +719,14 @@
     "named": false
   },
   {
+    "type": ".",
+    "named": false
+  },
+  {
+    "type": "...",
+    "named": false
+  },
+  {
     "type": ":",
     "named": false
   },
@@ -497,6 +739,10 @@
     "named": false
   },
   {
+    "type": "?",
+    "named": false
+  },
+  {
     "type": "@",
     "named": false
   },
@@ -505,7 +751,27 @@
     "named": false
   },
   {
+    "type": "@async",
+    "named": false
+  },
+  {
+    "type": "@cast",
+    "named": false
+  },
+  {
     "type": "@class",
+    "named": false
+  },
+  {
+    "type": "@deprecated",
+    "named": false
+  },
+  {
+    "type": "@diagnostic",
+    "named": false
+  },
+  {
+    "type": "@enum",
     "named": false
   },
   {
@@ -521,7 +787,23 @@
     "named": false
   },
   {
+    "type": "@overload",
+    "named": false
+  },
+  {
     "type": "@param",
+    "named": false
+  },
+  {
+    "type": "@private",
+    "named": false
+  },
+  {
+    "type": "@protected",
+    "named": false
+  },
+  {
+    "type": "@public",
     "named": false
   },
   {
@@ -565,6 +847,10 @@
     "named": true
   },
   {
+    "type": "diagnostic_identifier",
+    "named": true
+  },
+  {
     "type": "extends",
     "named": false
   },
@@ -586,6 +872,10 @@
   },
   {
     "type": "number",
+    "named": true
+  },
+  {
+    "type": "number",
     "named": false
   },
   {
@@ -598,6 +888,10 @@
   },
   {
     "type": "public",
+    "named": false
+  },
+  {
+    "type": "self",
     "named": false
   },
   {
@@ -617,7 +911,15 @@
     "named": false
   },
   {
+    "type": "{",
+    "named": false
+  },
+  {
     "type": "|",
+    "named": false
+  },
+  {
+    "type": "}",
     "named": false
   }
 ]
