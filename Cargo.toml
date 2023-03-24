@@ -1,7 +1,7 @@
 [package]
 name = "tree-sitter-luadoc"
 description = "Luadoc grammar for tree-sitter"
-version = "0.0.2"
+version = "0.0.3"
 authors = ["Amaan Qureshi <amaanq12@gmail.com>"]
 license = "MIT"
 readme = "bindings/rust/README.md"
