@@ -229,3 +229,29 @@ Test a Complicated Type
               (union_type
                 (literal_type)
                 (literal_type)))))))))
+
+==========================
+Test Multiple Diagnostics
+==========================
+
+@diagnostic disable: undefined-field, param-type-mismatch
+
+---
+
+(documentation
+  (diagnostic_annotation
+    (diagnostic_identifier)
+    (diagnostic_identifier)
+    (diagnostic_identifier)))
+
+=========================
+Test a Module Annotation
+=========================
+
+@module 'string.utils'
+
+---
+
+(documentation
+  (module_annotation
+    (string)))
