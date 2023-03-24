@@ -31,6 +31,13 @@ module.exports = grammar({
       $.vararg_annotation,
       $.diagnostic_annotation,
       $.deprecated_annotation,
+      $.meta_annotation,
+      $.module_annotation,
+      $.source_annotation,
+      $.version_annotation,
+      $.package_annotation,
+      $.operator_annotation,
+      $.nodiscard_annotation,
       $.cast_annotation,
       $.async_annotation,
       $.overload_annotation,
@@ -97,8 +104,42 @@ module.exports = grammar({
     diagnostic_annotation: $ => seq(
       '@diagnostic',
       $.diagnostic_identifier,
-      optional(seq(':', $.diagnostic_identifier)),
+      optional(seq(':', commaSep1($.diagnostic_identifier))),
     ),
+
+    meta_annotation: $ => seq('@meta', optional($.comment)),
+
+    module_annotation: $ => seq('@module', $.string, optional($.comment)),
+
+    source_annotation: $ => seq(
+      '@source',
+      field('filename', $.identifier),
+      '.',
+      field('extension', $.identifier),
+      optional(seq(
+        ':', field('start_line', $.number),
+        optional(seq(':', field('start_column', $.number))),
+      )),
+    ),
+
+    version_annotation: $ => seq(
+      '@version',
+      field('version', choice('5.1', '5.2', '5.3', '5.4', 'JIT')),
+      optional($.comment),
+    ),
+
+    package_annotation: $ => seq('@package', optional($.comment)),
+
+    operator_annotation: $ => seq(
+      '@operator',
+      $.identifier,
+      optional(seq('(', $.type, ')')),
+      ':',
+      $.type,
+      optional($.comment),
+    ),
+
+    nodiscard_annotation: $ => seq('@nodiscard', optional($.comment)),
 
     deprecated_annotation: $ => seq('@deprecated', optional(seq(optional(':'), $.comment))),
 
@@ -209,6 +250,8 @@ module.exports = grammar({
       'userdata',
       'void',
     )),
+
+    string: _ => token(seq('\'', /[^"]*/, '\'')),
 
     number: _ => /\d+/,
 
