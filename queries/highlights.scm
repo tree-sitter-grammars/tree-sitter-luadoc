@@ -48,9 +48,6 @@
   "@return"
 ] @keyword.return
 
-; Debugs
-
-
 ; Qualifiers
 
 [
