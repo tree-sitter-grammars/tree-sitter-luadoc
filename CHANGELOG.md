@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/amaanq/tree-sitter-luadoc/compare/v1.0.0...v1.0.1) (2023-06-18)
+
+
+### Bug Fixes
+
+* class name is a type, not identifier ([e819114](https://github.com/amaanq/tree-sitter-luadoc/commit/e81911491b590fbd3c3a4fd22548196b47391c0d))
+
 ## 1.0.0 (2023-05-13)
 
 
