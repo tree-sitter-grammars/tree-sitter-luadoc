@@ -111,7 +111,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "identifier"
+          "name": "type"
         },
         {
           "type": "CHOICE",
