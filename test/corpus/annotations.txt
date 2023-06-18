@@ -255,3 +255,20 @@ Test a Module Annotation
 (documentation
   (module_annotation
     (string)))
+
+=========================
+Test Class Types
+=========================
+
+@class sos.TableVisit.State<T>: { root: T }
+
+---
+
+(documentation
+  (class_annotation
+    (member_type
+      (member_type
+        (identifier)
+        (identifier))
+      (identifier))
+    (comment)))
