@@ -48,7 +48,7 @@ module.exports = grammar({
 
     class_annotation: $ => seq(
       '@class',
-      $.identifier,
+      $.type,
       optional(seq(':', $.type)),
       optional(choice($.class_at_comment, $.comment)),
     ),
