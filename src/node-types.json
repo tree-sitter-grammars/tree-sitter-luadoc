@@ -28,6 +28,10 @@
         "named": true
       },
       {
+        "type": "numeric_literal_type",
+        "named": true
+      },
+      {
         "type": "optional_type",
         "named": true
       },
@@ -1127,6 +1131,10 @@
   },
   {
     "type": "number",
+    "named": true
+  },
+  {
+    "type": "numeric_literal_type",
     "named": true
   },
   {

@@ -1218,6 +1218,10 @@
           {
             "type": "SYMBOL",
             "name": "literal_type"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "numeric_literal_type"
           }
         ]
       }
@@ -1911,6 +1915,10 @@
     "number": {
       "type": "PATTERN",
       "value": "\\d+"
+    },
+    "numeric_literal_type": {
+      "type": "PATTERN",
+      "value": "-?\\d+(\\.\\d+)?"
     },
     "positional_field": {
       "type": "SEQ",

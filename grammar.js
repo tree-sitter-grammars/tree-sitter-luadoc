@@ -180,6 +180,7 @@ module.exports = grammar({
       $.member_type,
       $.optional_type,
       $.literal_type,
+      $.numeric_literal_type,
     )),
 
     array_type: $ => choice(
@@ -260,6 +261,8 @@ module.exports = grammar({
     )),
 
     number: _ => /\d+/,
+
+    numeric_literal_type: _ => /-?\d+(\.\d+)?/,
 
     positional_field: $ => seq('[', $.number, ']'),
 
