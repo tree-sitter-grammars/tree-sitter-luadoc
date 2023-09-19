@@ -236,7 +236,10 @@ module.exports = grammar({
 
     optional_type: $ => seq($.type, '?'),
 
-    literal_type: _ => seq('"', /[^"]*/, '"'),
+    literal_type: _ => choice(
+      seq('"', /[^"]*/, '"'),
+      seq('\'', /[^']*/, '\''),
+    ),
 
     builtin_type: _ => prec.right(choice(
       'any',
@@ -251,7 +254,10 @@ module.exports = grammar({
       'void',
     )),
 
-    string: _ => token(seq('\'', /[^"]*/, '\'')),
+    string: _ => token(choice(
+      seq('"', /[^"]*/, '"'),
+      seq('\'', /[^']*/, '\''),
+    )),
 
     number: _ => /\d+/,
 
