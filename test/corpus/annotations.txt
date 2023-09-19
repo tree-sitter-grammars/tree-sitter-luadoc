@@ -202,7 +202,7 @@ Test a See Reference
 Test a Complicated Type
 ========================
 
-@type Car|Ship|fun(type: string, data: any):void|table<string, string[]>|"one"|"two"
+@type Car|Ship|fun(type: string, data: any):void|table<string, string[]>|"one"|'two'
 
 ---
 
