@@ -29,6 +29,22 @@ Test a Class That Extends Another Class
       (identifier)
       (identifier))))
 
+============================================================
+Test a class That Extends Another Class (multi-inheritance)
+============================================================
+
+@class Eagle : Animal, Flyable, Bird  this is a plain comment
+
+---
+
+(documentation
+  (class_annotation
+    (identifier)
+    (identifier)
+    (identifier)
+    (identifier)
+    (comment)))
+
 ========================
 Test a Field Annotation
 ========================
