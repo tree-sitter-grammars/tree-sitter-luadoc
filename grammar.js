@@ -86,7 +86,7 @@ module.exports = grammar({
     field_annotation: $ => seq(
       '@field',
       optional($.qualifier),
-      choice($.identifier, $.positional_field),
+      choice($.identifier, $.positional_field, $.indexed_field),
       optional('?'),
       $.type,
       optional(choice($.at_comment, $.comment)),
@@ -293,6 +293,8 @@ module.exports = grammar({
     numeric_literal_type: _ => /-?\d+(\.\d+)?/,
 
     positional_field: $ => seq('[', $.number, ']'),
+
+    indexed_field: $ => seq('[', choice($.identifier, $.string), ']'),
 
     identifier: _ => /[a-zA-Z_][a-zA-Z0-9_]*/,
 

@@ -352,3 +352,17 @@ Test a Named Return Type
 		(identifier))
 		(identifier)
 		(builtin_type))))
+
+=========================
+Test an Indexed Field
+=========================
+
+@field ['local'] string
+
+---
+
+(documentation
+  (field_annotation
+  (indexed_field
+    (string))
+  (builtin_type)))
