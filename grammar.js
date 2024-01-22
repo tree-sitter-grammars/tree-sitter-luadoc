@@ -233,7 +233,7 @@ module.exports = grammar({
       $.type,
     ),
 
-    member_type: $ => seq($.type, choice('#', '.'), $.identifier),
+    member_type: $ => seq($.type, choice(token.immediate('#'), '.'), $.identifier),
 
     optional_type: $ => seq($.type, '?'),
 
