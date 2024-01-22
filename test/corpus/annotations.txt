@@ -306,3 +306,17 @@ is of type {@link CodeAction} or a Thenable that resolves to such.
     (comment)
     (identifier)
     (comment)))
+
+=========================
+Test a Since Annotation
+=========================
+
+@since 3.17.0
+
+---
+
+(documentation
+  (since_annotation
+    major: (number)
+    minor: (number)
+    patch: (number)))

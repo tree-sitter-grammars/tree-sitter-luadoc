@@ -45,6 +45,7 @@ module.exports = grammar({
       $.language_injection,
       $.see_reference,
       $.link_reference,
+      $.since_annotation,
     ),
 
     class_annotation: $ => seq(
@@ -162,6 +163,16 @@ module.exports = grammar({
       '@link',
       $.type,
       '}',
+      optional($.comment),
+    ),
+
+    since_annotation: $ => seq(
+      '@since',
+      field('major', $.number),
+      '.',
+      field('minor', $.number),
+      '.',
+      field('patch', $.number),
       optional($.comment),
     ),
 
