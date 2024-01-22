@@ -155,7 +155,7 @@ module.exports = grammar({
 
     see_reference: $ => seq('@see', $.type, optional($.comment)),
 
-    qualifier: _ => choice('public', 'protected', 'private'),
+    qualifier: _ => choice('public', 'protected', 'private', 'package'),
 
     class_at_comment: $ => seq(
       '@',
