@@ -44,6 +44,7 @@ module.exports = grammar({
       $.enum_annotation,
       $.language_injection,
       $.see_reference,
+      $.link_reference,
     ),
 
     class_annotation: $ => seq(
@@ -154,6 +155,15 @@ module.exports = grammar({
     language_injection: $ => seq('@language', $.identifier, optional($.comment)),
 
     see_reference: $ => seq('@see', $.type, optional($.comment)),
+
+    link_reference: $ => seq(
+      alias(token(prec(-1, /[^\r\n{]+/)), $.comment),
+      '{',
+      '@link',
+      $.type,
+      '}',
+      optional($.comment),
+    ),
 
     qualifier: _ => choice('public', 'protected', 'private', 'package'),
 

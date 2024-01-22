@@ -292,3 +292,17 @@ Test Class Types
         (identifier))
       (identifier))
     (comment)))
+
+=========================
+Test a Link Reference
+=========================
+
+is of type {@link CodeAction} or a Thenable that resolves to such.
+
+---
+
+(documentation
+  (link_reference
+    (comment)
+    (identifier)
+    (comment)))
