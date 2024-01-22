@@ -245,7 +245,11 @@ module.exports = grammar({
       '(',
       choice(commaSep($.parameter), '...', commaSep($.type), seq('self', optional('?'))),
       ')',
-      optional(seq(':', commaSep1(prec.right($.type)))),
+      optional(seq(
+        optional(seq(':', field('name', $.identifier))),
+        ':',
+        commaSep1(prec.right($.type)),
+      )),
     )),
 
     parameter: $ => seq(

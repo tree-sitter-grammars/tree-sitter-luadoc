@@ -334,3 +334,21 @@ Test an As Annotation
     (member_type
       (identifier)
       (identifier))))
+
+=========================
+Test a Named Return Type
+=========================
+
+@field hlgroup_at fun(i: integer): hlgroup: string
+
+---
+
+(documentation
+	(field_annotation
+	(identifier)
+	(function_type
+		(parameter
+		(identifier)
+		(identifier))
+		(identifier)
+		(builtin_type))))
