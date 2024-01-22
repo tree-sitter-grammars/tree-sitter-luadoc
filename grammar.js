@@ -46,6 +46,7 @@ module.exports = grammar({
       $.see_reference,
       $.link_reference,
       $.since_annotation,
+      $.as_annotation,
     ),
 
     class_annotation: $ => seq(
@@ -175,6 +176,8 @@ module.exports = grammar({
       field('patch', $.number),
       optional($.comment),
     ),
+
+    as_annotation: $ => seq('[[', '@as', $.type, ']]', optional($.comment)),
 
     qualifier: _ => choice('public', 'protected', 'private', 'package'),
 

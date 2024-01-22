@@ -320,3 +320,17 @@ Test a Since Annotation
     major: (number)
     minor: (number)
     patch: (number)))
+
+=========================
+Test an As Annotation
+=========================
+
+[[@as Foo.Bar]]
+
+---
+
+(documentation
+  (as_annotation
+    (member_type
+      (identifier)
+      (identifier))))
