@@ -105,8 +105,15 @@ module.exports = grammar({
     generic_annotation: $ => seq(
       '@generic',
       $.identifier,
-      optional(seq(':', $.identifier)),
-      optional(seq(',', $.identifier, optional(seq(':', $.identifier)))),
+      optional(seq(':', field('parent_type', $.type))),
+      optional(seq(
+        ',',
+        $.identifier,
+        optional(seq(
+          ':',
+          field('parent_type', $.type),
+        )),
+      )),
       optional($.comment),
     ),
 
