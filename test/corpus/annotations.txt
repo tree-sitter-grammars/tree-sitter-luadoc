@@ -425,3 +425,17 @@ Test a Custom Type
         (identifier))
       (custom_type
         (identifier)))))
+
+=========================
+Test a Cast Annotation
+=========================
+
+@cast x +boolean, -number, +?
+
+---
+
+(documentation
+  (cast_annotation
+    (identifier)
+    (builtin_type)
+    (builtin_type)))

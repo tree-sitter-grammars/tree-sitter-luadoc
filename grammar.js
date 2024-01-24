@@ -153,7 +153,12 @@ module.exports = grammar({
 
     deprecated_annotation: $ => seq('@deprecated', optional(seq(optional(':'), $.comment))),
 
-    cast_annotation: $ => seq('@cast', $.type, $.type, optional($.comment)),
+    cast_annotation: $ => seq(
+      '@cast',
+      $.identifier,
+      commaSep1(seq(optional(choice('-', '+')), choice($.type, '?'))),
+      optional($.comment),
+    ),
 
     async_annotation: $ => seq('@async', optional($.comment)),
 
