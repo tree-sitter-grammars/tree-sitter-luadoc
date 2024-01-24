@@ -366,3 +366,32 @@ Test an Indexed Field
   (indexed_field
     (string))
   (builtin_type)))
+
+=========================
+Test a Tuple Type
+=========================
+
+@field public iter fun(self: Stack): ((fun(i: integer, item: any): integer, any), Stack, integer)
+
+---
+
+(documentation
+  (field_annotation
+    (qualifier)
+    (identifier)
+    (function_type
+      (parameter
+        (identifier))
+      (tuple_type
+        (parenthesized_type
+          (function_type
+            (parameter
+              (identifier)
+              (identifier))
+            (parameter
+              (identifier)
+              (builtin_type))
+            (identifier)
+            (builtin_type)))
+        (identifier)
+        (identifier)))))

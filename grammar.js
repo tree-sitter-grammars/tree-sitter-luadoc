@@ -200,6 +200,7 @@ module.exports = grammar({
       $.table_literal_type,
       $.union_type,
       $.parenthesized_type,
+      $.tuple_type,
       $.function_type,
       $.member_type,
       $.optional_type,
@@ -239,6 +240,8 @@ module.exports = grammar({
     union_type: $ => prec.right(seq($.type, '|', $.type)),
 
     parenthesized_type: $ => seq('(', $.type, ')'),
+
+    tuple_type: $ => seq('(', commaSep2($.type), ')'),
 
     function_type: $ => prec.right(seq(
       choice('fun', 'function'),
@@ -324,4 +327,17 @@ function commaSep(rule) {
  */
 function commaSep1(rule) {
   return seq(rule, repeat(seq(',', rule)));
+}
+
+// commaSep2
+
+/**
+ * Creates a rule to match two or more of the rules separated by a comma
+ *
+ * @param {Rule} rule
+ *
+ * @return {SeqRule}
+ */
+function commaSep2(rule) {
+  return seq(rule, seq(',', rule), repeat(seq(',', rule)));
 }
