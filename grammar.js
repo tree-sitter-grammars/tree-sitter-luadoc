@@ -115,7 +115,8 @@ module.exports = grammar({
     diagnostic_annotation: $ => seq(
       '@diagnostic',
       $.diagnostic_identifier,
-      optional(seq(':', commaSep1($.diagnostic_identifier))),
+      ':',
+      commaSep1($.diagnostic_identifier),
     ),
 
     meta_annotation: $ => seq('@meta', optional($.comment)),
