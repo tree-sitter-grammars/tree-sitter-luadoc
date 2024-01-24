@@ -408,3 +408,20 @@ Test a Continuation
   (continuation
     (literal_type)
     (comment)))
+
+=========================
+Test a Custom Type
+=========================
+
+@alias myLiteralAlias `A` | `B`
+
+---
+
+(documentation
+  (alias_annotation
+    (identifier)
+    (union_type
+      (custom_type
+        (identifier))
+      (custom_type
+        (identifier)))))

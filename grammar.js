@@ -219,6 +219,7 @@ module.exports = grammar({
       $.optional_type,
       $.literal_type,
       $.numeric_literal_type,
+      $.custom_type,
     )),
 
     array_type: $ => choice(
@@ -285,6 +286,8 @@ module.exports = grammar({
       seq('"', /[^"]*/, '"'),
       seq('\'', /[^']*/, '\''),
     ),
+
+    custom_type: $ => seq('`', $.identifier, '`'),
 
     builtin_type: _ => prec.right(choice(
       'any',
