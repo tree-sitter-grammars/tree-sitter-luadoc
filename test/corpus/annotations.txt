@@ -2,7 +2,7 @@
 Test a Class Annotation
 ========================
 
-@class Transport @parent class
+@class (exact) Transport @parent class
 
 ---
 
