@@ -177,7 +177,13 @@ module.exports = grammar({
       optional($.comment),
     ),
 
-    as_annotation: $ => seq('[[', '@as', $.type, ']]', optional($.comment)),
+    as_annotation: $ => seq(
+      choice(
+        seq('[[', '@as', $.type, ']]'),
+        seq('[=[', '@as', $.type, ']=]'),
+      ),
+      optional($.comment),
+    ),
 
     qualifier: _ => choice('public', 'protected', 'private', 'package'),
 
