@@ -12,6 +12,10 @@
         "named": true
       },
       {
+        "type": "custom_type",
+        "named": true
+      },
+      {
         "type": "function_type",
         "named": true
       },
@@ -45,6 +49,10 @@
       },
       {
         "type": "table_type",
+        "named": true
+      },
+      {
+        "type": "tuple_type",
         "named": true
       },
       {
@@ -211,6 +219,44 @@
     }
   },
   {
+    "type": "continuation",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "at_comment",
+          "named": true
+        },
+        {
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "type",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "custom_type",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "deprecated_annotation",
     "named": true,
     "fields": {},
@@ -266,6 +312,10 @@
         },
         {
           "type": "class_annotation",
+          "named": true
+        },
+        {
+          "type": "continuation",
           "named": true
         },
         {
@@ -446,7 +496,18 @@
   {
     "type": "generic_annotation",
     "named": true,
-    "fields": {},
+    "fields": {
+      "parent_type": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "type",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
@@ -933,6 +994,21 @@
     }
   },
   {
+    "type": "tuple_type",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "type",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "type_annotation",
     "named": true,
     "fields": {},
@@ -1048,11 +1124,27 @@
     "named": false
   },
   {
+    "type": "(exact)",
+    "named": false
+  },
+  {
+    "type": "(key)",
+    "named": false
+  },
+  {
     "type": ")",
     "named": false
   },
   {
+    "type": "+",
+    "named": false
+  },
+  {
     "type": ",",
+    "named": false
+  },
+  {
+    "type": "-",
     "named": false
   },
   {
@@ -1228,6 +1320,10 @@
     "named": false
   },
   {
+    "type": "[=[",
+    "named": false
+  },
+  {
     "type": "[[",
     "named": false
   },
@@ -1236,7 +1332,15 @@
     "named": false
   },
   {
+    "type": "]=]",
+    "named": false
+  },
+  {
     "type": "]]",
+    "named": false
+  },
+  {
+    "type": "`",
     "named": false
   },
   {
