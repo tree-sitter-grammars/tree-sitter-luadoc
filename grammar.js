@@ -24,6 +24,7 @@ module.exports = grammar({
       $.type_annotation,
       $.param_annotation,
       $.alias_annotation,
+      $.continuation,
       $.return_annotation,
       $.field_annotation,
       $.qualifier_annotation,
@@ -73,6 +74,12 @@ module.exports = grammar({
     alias_annotation: $ => seq(
       '@alias',
       $.identifier,
+      $.type,
+      optional(choice($.at_comment, $.comment)),
+    ),
+
+    continuation: $ => seq(
+      '|',
       $.type,
       optional(choice($.at_comment, $.comment)),
     ),

@@ -395,3 +395,16 @@ Test a Tuple Type
             (builtin_type)))
         (identifier)
         (identifier)))))
+
+=========================
+Test a Continuation
+=========================
+
+| '"left"' # The left side of the device
+
+---
+
+(documentation
+  (continuation
+    (literal_type)
+    (comment)))
