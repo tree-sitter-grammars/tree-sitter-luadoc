@@ -166,7 +166,7 @@ module.exports = grammar({
 
     overload_annotation: $ => seq('@overload', $.function_type, optional($.comment)),
 
-    enum_annotation: $ => seq('@enum', $.identifier, optional($.comment)),
+    enum_annotation: $ => seq('@enum', optional('(key)'), $.identifier, optional($.comment)),
 
     language_injection: $ => seq('@language', $.identifier, optional($.comment)),
 
