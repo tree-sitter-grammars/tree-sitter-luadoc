@@ -289,6 +289,7 @@
   {
     "type": "documentation",
     "named": true,
+    "root": true,
     "fields": {},
     "children": {
       "multiple": false,
@@ -498,7 +499,7 @@
     "named": true,
     "fields": {
       "parent_type": {
-        "multiple": false,
+        "multiple": true,
         "required": false,
         "types": [
           {
