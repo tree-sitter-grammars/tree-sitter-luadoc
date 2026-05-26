@@ -1,0 +1,329 @@
+// Luadoc grammar for tree-sitter (native DSL).
+// Translated from grammar.js.
+
+macro comma_sep1(rule: rule_t) rule_t {
+    seq(rule, repeat(seq(",", rule)))
+}
+
+macro comma_sep(rule: rule_t) rule_t {
+    optional(comma_sep1(rule))
+}
+
+macro comma_sep2(rule: rule_t) rule_t {
+    seq(rule, seq(",", rule), repeat(seq(",", rule)))
+}
+
+grammar {
+    language: "luadoc",
+    supertypes: [type],
+}
+
+rule documentation {
+    choice(
+        class_annotation, type_annotation, param_annotation, alias_annotation,
+        continuation, return_annotation, field_annotation, qualifier_annotation,
+        generic_annotation, vararg_annotation, diagnostic_annotation,
+        deprecated_annotation, meta_annotation, module_annotation,
+        source_annotation, version_annotation, package_annotation,
+        operator_annotation, nodiscard_annotation, cast_annotation,
+        async_annotation, overload_annotation, enum_annotation,
+        language_injection, see_reference, link_reference, since_annotation,
+        as_annotation,
+    )
+}
+
+rule class_annotation {
+    seq(
+        "@class",
+        optional("(exact)"),
+        type,
+        optional(seq(":", comma_sep1(type))),
+        optional(choice(class_at_comment, comment)),
+    )
+}
+
+rule type_annotation {
+    seq(
+        "@type",
+        comma_sep1(prec_right(0, type)),
+        optional(choice(at_comment, comment)),
+    )
+}
+
+rule param_annotation {
+    seq(
+        "@param",
+        choice(identifier, "..."),
+        optional("?"),
+        type,
+        optional(choice(at_comment, comment)),
+    )
+}
+
+rule alias_annotation {
+    seq("@alias", identifier, type, optional(choice(at_comment, comment)))
+}
+
+rule continuation {
+    seq("|", type, optional(choice(at_comment, comment)))
+}
+
+rule return_annotation {
+    seq("@return", type, optional(choice(at_comment, comment)))
+}
+
+rule field_annotation {
+    seq(
+        "@field",
+        optional(qualifier),
+        choice(identifier, positional_field, indexed_field),
+        optional("?"),
+        type,
+        optional(choice(at_comment, comment)),
+    )
+}
+
+rule qualifier_annotation { choice("@public", "@protected", "@private") }
+
+rule generic_annotation {
+    seq(
+        "@generic",
+        identifier,
+        optional(seq(":", field(parent_type, type))),
+        optional(seq(
+            ",",
+            identifier,
+            optional(seq(":", field(parent_type, type))),
+        )),
+        optional(comment),
+    )
+}
+
+rule vararg_annotation { seq("@vararg", type, optional(comment)) }
+
+rule diagnostic_annotation {
+    seq(
+        "@diagnostic",
+        diagnostic_identifier,
+        ":",
+        comma_sep1(diagnostic_identifier),
+    )
+}
+
+rule meta_annotation { seq("@meta", optional(comment)) }
+
+rule module_annotation { seq("@module", string, optional(comment)) }
+
+rule source_annotation {
+    seq(
+        "@source",
+        field(filename, identifier),
+        ".",
+        field(extension, identifier),
+        optional(seq(
+            ":", field(start_line, number),
+            optional(seq(":", field(start_column, number))),
+        )),
+    )
+}
+
+rule version_annotation {
+    seq(
+        "@version",
+        field(version, choice("5.1", "5.2", "5.3", "5.4", "JIT")),
+        optional(comment),
+    )
+}
+
+rule package_annotation { seq("@package", optional(comment)) }
+
+rule operator_annotation {
+    seq(
+        "@operator",
+        identifier,
+        optional(seq("(", type, ")")),
+        ":",
+        type,
+        optional(comment),
+    )
+}
+
+rule nodiscard_annotation { seq("@nodiscard", optional(comment)) }
+
+rule deprecated_annotation {
+    seq("@deprecated", optional(seq(optional(":"), comment)))
+}
+
+rule cast_annotation {
+    seq(
+        "@cast",
+        identifier,
+        comma_sep1(seq(optional(choice("-", "+")), choice(type, "?"))),
+        optional(comment),
+    )
+}
+
+rule async_annotation { seq("@async", optional(comment)) }
+
+rule overload_annotation {
+    seq("@overload", function_type, optional(comment))
+}
+
+rule enum_annotation {
+    seq("@enum", optional("(key)"), identifier, optional(comment))
+}
+
+rule language_injection { seq("@language", identifier, optional(comment)) }
+
+rule see_reference { seq("@see", type, optional(comment)) }
+
+rule link_reference {
+    seq(
+        alias(token(prec(-1, regexp(r"[^\r\n{]+"))), comment),
+        "{",
+        "@link",
+        type,
+        "}",
+        optional(comment),
+    )
+}
+
+rule since_annotation {
+    seq(
+        "@since",
+        field(major, number),
+        ".",
+        field(minor, number),
+        ".",
+        field(patch, number),
+        optional(comment),
+    )
+}
+
+rule as_annotation {
+    seq(
+        choice(
+            seq("[[", "@as", type, "]]"),
+            seq("[=[", "@as", type, "]=]"),
+        ),
+        optional(comment),
+    )
+}
+
+rule qualifier { choice("public", "protected", "private", "package") }
+
+rule class_at_comment {
+    seq("@", identifier, optional(seq("extends", identifier)), optional(comment))
+}
+
+rule at_comment { seq("@", identifier, optional(comment)) }
+
+rule comment { token(prec(-1, regexp(r"[^\r\n]+"))) }
+
+rule type {
+    prec_right(0, choice(
+        builtin_type, identifier, array_type, table_type, table_literal_type,
+        union_type, parenthesized_type, tuple_type, function_type, member_type,
+        optional_type, literal_type, numeric_literal_type, custom_type,
+    ))
+}
+
+rule array_type { choice(seq(type, "[", token_immediate("]"))) }
+
+rule table_type {
+    seq(
+        "table",
+        "<",
+        field(key, type),
+        optional(seq(",", field(value, type))),
+        ">",
+    )
+}
+
+rule table_literal_type {
+    seq(
+        "{",
+        comma_sep(seq(
+            field(field, choice(
+                seq(identifier),
+                seq("[", choice(type, number), "]"),
+            )),
+            optional("?"),
+            ":",
+            type,
+        )),
+        "}",
+    )
+}
+
+rule union_type { prec_right(0, seq(type, "|", type)) }
+
+rule parenthesized_type { seq("(", type, ")") }
+
+rule tuple_type { seq("(", comma_sep2(type), ")") }
+
+rule function_type {
+    prec_right(0, seq(
+        choice("fun", "function"),
+        "(",
+        choice(comma_sep(parameter), "...", comma_sep(type), seq("self", optional("?"))),
+        ")",
+        optional(seq(
+            optional(seq(":", field(name, identifier))),
+            ":",
+            comma_sep1(prec_right(0, type)),
+        )),
+    ))
+}
+
+rule parameter {
+    seq(
+        choice(
+            seq(choice(identifier, "self"), optional("?")),
+            "...",
+        ),
+        ":",
+        type,
+    )
+}
+
+rule member_type {
+    seq(type, choice(token_immediate("#"), "."), identifier)
+}
+
+rule optional_type { seq(type, "?") }
+
+rule literal_type {
+    choice(
+        seq("\"", regexp(r#"[^"]*"#), "\""),
+        seq("'", regexp(r"[^']*"), "'"),
+    )
+}
+
+rule custom_type { seq("`", identifier, "`") }
+
+rule builtin_type {
+    prec_right(0, choice(
+        "any", "boolean", "function", "CFunction", "nil", "number",
+        "string", "table", "userdata", "void",
+    ))
+}
+
+rule string {
+    token(choice(
+        seq("\"", regexp(r#"[^"]*"#), "\""),
+        seq("'", regexp(r"[^']*"), "'"),
+    ))
+}
+
+rule number { regexp(r"\d+") }
+
+rule numeric_literal_type { regexp(r"-?\d+(\.\d+)?") }
+
+rule positional_field { seq("[", number, "]") }
+
+rule indexed_field { seq("[", choice(identifier, string), "]") }
+
+rule identifier { regexp(r"[a-zA-Z_][a-zA-Z0-9_]*") }
+
+rule diagnostic_identifier { regexp(r"[a-zA-Z_][a-zA-Z0-9_-]*") }
