@@ -289,6 +289,7 @@
   {
     "type": "documentation",
     "named": true,
+    "root": true,
     "fields": {},
     "children": {
       "multiple": false,
@@ -498,7 +499,7 @@
     "named": true,
     "fields": {
       "parent_type": {
-        "multiple": false,
+        "multiple": true,
         "required": false,
         "types": [
           {
@@ -1381,11 +1382,11 @@
   },
   {
     "type": "number",
-    "named": true
+    "named": false
   },
   {
     "type": "number",
-    "named": false
+    "named": true
   },
   {
     "type": "numeric_literal_type",
@@ -1413,11 +1414,11 @@
   },
   {
     "type": "string",
-    "named": true
+    "named": false
   },
   {
     "type": "string",
-    "named": false
+    "named": true
   },
   {
     "type": "table",

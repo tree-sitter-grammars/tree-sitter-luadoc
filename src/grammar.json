@@ -1,4 +1,5 @@
 {
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/grammar.schema.json",
   "name": "luadoc",
   "rules": {
     "documentation": {
@@ -587,8 +588,12 @@
                           "value": ":"
                         },
                         {
-                          "type": "SYMBOL",
-                          "name": "identifier"
+                          "type": "FIELD",
+                          "name": "parent_type",
+                          "content": {
+                            "type": "SYMBOL",
+                            "name": "type"
+                          }
                         }
                       ]
                     },
@@ -2439,6 +2444,6 @@
   "inline": [],
   "supertypes": [
     "type"
-  ]
+  ],
+  "reserved": {}
 }
-

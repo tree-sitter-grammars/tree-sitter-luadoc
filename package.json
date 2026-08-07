@@ -2,43 +2,57 @@
   "name": "tree-sitter-luadoc",
   "version": "1.1.0",
   "description": "Luadoc grammar for tree-sitter",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tree-sitter-grammars/tree-sitter-luadoc.git.git"
+  },
+  "funding": "",
+  "license": "MIT",
+  "author": {
+    "name": "Amaan Qureshi",
+    "email": "amaanq12@gmail.com",
+    "url": ""
+  },
   "main": "bindings/node",
+  "types": "bindings/node",
   "keywords": [
-    "parser",
-    "lexer",
+    "incremental",
+    "parsing",
+    "tree-sitter",
     "luadoc"
   ],
-  "author": "Amaan Qureshi <amaanq12@gmail.com>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/amaanq/tree-sitter-luadoc/issues"
-  },
-  "homepage": "https://github.com/amaanq/tree-sitter-luadoc#readme",
+  "files": [
+    "grammar.js",
+    "tree-sitter.json",
+    "binding.gyp",
+    "prebuilds/**",
+    "bindings/node/*",
+    "queries/*",
+    "src/**",
+    "*.wasm"
+  ],
   "dependencies": {
-    "nan": "^2.18.0"
+    "node-addon-api": "^8.5.0",
+    "node-gyp-build": "^4.8.4"
   },
   "devDependencies": {
-    "eslint": "^8.56.0",
-    "eslint-config-google": "^0.14.0",
-    "node-gyp": "^10.0.1",
-    "tree-sitter-cli": "^0.20.8"
+    "prebuildify": "^6.0.1",
+    "tree-sitter": "^0.25.0",
+    "tree-sitter-cli": "^0.26.11"
   },
-  "repository": "https://github.com/amaanq/tree-sitter-luadoc",
-  "scripts": {
-    "build": "tree-sitter generate && node-gyp build",
-    "lint": "eslint grammar.js",
-    "parse": "tree-sitter parse",
-    "test": "tree-sitter test"
+  "peerDependencies": {
+    "tree-sitter": "^0.25.0"
   },
-  "tree-sitter": [
-    {
-      "injection-regex": "luadoc",
-      "file-types": [
-        "luadoc"
-      ],
-      "highlights": [
-        "queries/highlights.scm"
-      ]
+  "peerDependenciesMeta": {
+    "tree-sitter": {
+      "optional": true
     }
-  ]
+  },
+  "scripts": {
+    "install": "node-gyp-build",
+    "prestart": "tree-sitter build --wasm",
+    "start": "tree-sitter playground",
+    "test": "node --test bindings/node/*_test.js"
+  }
 }
