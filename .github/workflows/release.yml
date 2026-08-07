@@ -1,35 +1,19 @@
-name: Release
+name: Create release
 
 on:
   push:
-    branches:
-      - master
+    tags: ["*"]
   workflow_dispatch:
+
+concurrency:
+  group: ${{github.workflow}}-${{github.ref}}
+  cancel-in-progress: true
 
 permissions:
   contents: write
-  pull-requests: write
+  id-token: write
+  attestations: write
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-      - run: npm install
-      - run: npm test
-
   release:
-    name: release
-    if: ${{ github.ref == 'refs/heads/master' }}
-    needs:
-      - build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: google-github-actions/release-please-action@v3
-        id: release
-        with:
-          release-type: simple
-          package-name: tree-sitter-luadoc
+    uses: tree-sitter/workflows/.github/workflows/release.yml@main
